@@ -1,0 +1,79 @@
+<?php
+
+stub_namespace
+
+use Illuminate\Database\Eloquent\Model;
+stub_use_softdelete
+
+stub_comment_property
+
+class stub_model_name extends Model
+{
+    /**
+     * 
+     */
+    stub_trait_softdelete
+ 
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    stub_property_table
+    
+    /**
+     * 
+     */
+    stub_primary_key
+    
+    /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    stub_timestamp
+    
+    /**
+     * The storage format of the model's date columns.
+     *
+     * @var string
+     */
+    stub_date_format
+    
+    /**
+     * 
+     */
+    stub_created_at
+    
+    /**
+     * 
+     */
+    stub_updated_at
+    
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    stub_deleted_at
+    
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    stub_fillable
+    
+    /**
+     * The attributes that aren't mass assignable.
+     *
+     * @var array
+     */
+    stub_guarded
+    
+    /**
+     * Relation
+     */
+stub_relation
+    
+}
