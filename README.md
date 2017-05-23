@@ -1,11 +1,8 @@
 # Laravel ORM Builder
 
-[![Latest Version on Packagist][ico-version]][link-packagist]
+
 [![Software License][ico-license]](LICENSE.md)
-[![Build Status][ico-travis]][link-travis]
-[![Coverage Status][ico-scrutinizer]][link-scrutinizer]
-[![Quality Score][ico-code-quality]][link-code-quality]
-[![Total Downloads][ico-downloads]][link-downloads]
+
 
 Reverse Database into Eloquent ORM Model
 
@@ -15,13 +12,13 @@ Reverse Database into Eloquent ORM Model
 Via Composer
 
 ``` bash
-$ composer require spimpolari/ORMBuilder
+$ composer require spimpolari/LaravelORMBuilder
 ```
 
 Then add the service provider in `config/app.php`:
 
 ```php
-spimpolari\ORMBuilder\ORMBuilderServiceProvider::class,
+spimpolari\LaravelORMBuilder\ORMBuilderServiceProvider::class,
 ```
 Modify .env config file with database access info
 
@@ -42,7 +39,7 @@ Path of Model to write all Eloquent ORM Model from start Laravel root directory.
 ```bash
 $ php artisan orm:db app/Model App\Model
 ```
-Namespace of Model write start in Eloquent ORM Model php file.
+Namespace of ORM Model.
 
 **Options:**
 ```bash
