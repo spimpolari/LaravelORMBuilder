@@ -34,12 +34,12 @@ This command reverse all table from database into `app/Model` Eloquent ORM Model
 ```bash
 $ php artisan orm:db app/Model
 ```
-Path of Model to write all Eloquent ORM Model from start Laravel root directory.
+Path of directory Model file, start form project root.
 
 ```bash
 $ php artisan orm:db app/Model App\Model
 ```
-Namespace of ORM Model.
+Namespace of ORM Model, path of Model file is mandatory.
 
 **Options:**
 ```bash
@@ -51,6 +51,57 @@ Force Builder to overwrite all exists model without any question.
 $ php artisan orm:db -O/--only=table1,table2,table3
 ```
 List alla table you want to convert, if set, exclude option will be ignored. 
+
+```bash
+$ php artisan orm:db -E/--exclude=table1,table2,table3
+```
+List alla table you want to exclude.
+
+```bash
+$ php artisan orm:db -T/--disable-timestamps
+```
+All timestamps fields are disabled.
+
+```bash
+$ php artisan orm:db -D/--date_format=U
+```
+This option determines how date attributes are stored in the database.
+
+```bash
+$ php artisan orm:db -C|--created_at=created_at
+```
+If you need to customize the const CREATED_AT in your model. 
+
+```bash
+$ php artisan orm:db -C|--update_at=updated_at
+```
+If you need to customize the const UPDATED_AT in your model.
+
+```bash
+$ php artisan orm:db --deleted_at=deleted_at
+```
+If you set --enable-softdelete option, this option customize date field in your model.
+
+```bash
+$ php artisan orm:db --disable-fillable
+```
+Disable write all field except id field in fillable property in your model, this property is commented by default.
+
+```bash
+$ php artisan orm:db -G/--disable-guarded
+```
+Disable write all field in guarded property in your model, this property is commented by default.
+
+```bash
+$ php artisan orm:db --disable-primary
+```
+Disable write primaryKey property in your model.
+
+```bash
+$ php artisan orm:db --disable-property
+```
+For default, Laravel ORM Builder comment Eloquent Model in PHPDoc format with a list of filed in database table like a property var, this comment is usefult for $Model->field_name autocompletation if supported in your IDE.
+This option disable write a PHPDoc Comment.
 
 ## Change log
 
