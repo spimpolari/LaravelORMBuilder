@@ -7,20 +7,10 @@ use spimpolari\LaravelORMBuilder\ORMBuilderHelper;
 use spimpolari\LaravelORMBuilder\ORMBuilderModel;
 use Illuminate\Console\Command;
  
-/**
- * Get an existing package from a remote Github repository.
- *
- * @package Packager
- * @author JeroenG
- * 
- **/
+
 class ORMBuilderDBCommand extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
+
     protected $signature = 'orm:db '
         . '{path=app/Model : Path of Model File.}'
         . '{namespace=App\Model : Namespace of Model.}'

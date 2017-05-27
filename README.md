@@ -103,6 +103,28 @@ $ php artisan orm:db --disable-property
 For default, Laravel ORM Builder comment Eloquent Model in PHPDoc format with a list of filed in database table like a property var, this comment is usefult for $Model->field_name autocompletation if supported in your IDE.
 This option disable write a PHPDoc Comment.
 
+```bash
+$ php artisan orm:db --disable-table
+```
+Disable write table property in your model.
+
+```bash
+$ php artisan orm:db -R/--disable-relation
+```
+For default, Laravel ORM Builder inspect all table, and scan all field that have name relation like tablename_id. If match Laravel ORM Builder write HasMany e BelongsTo method in your model they respect One To Many Relations.
+This Option disable scan and write One to Many relation.
+
+```bash
+$ php artisan orm:db -P/--disable-plural-table
+```
+For default Laravel ORM Builder convert your plural table name like Books in Book Model name, and search book_id name field for relation. Singular and Plural helper function in laravel support only english name, and Laravel ORM Builder support only English table name, to convert table name plural in model name singular.
+If you have table name in other language, use this option.
+
+```bash
+$ php artisan orm:db -S/--enable-softdelete
+```
+Enable Soft Delete in your model.
+
 ## Change log
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
