@@ -3,6 +3,7 @@
 namespace spimpolari\LaravelORMBuilder;
 
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Facades\DB;
 
 /**
  * 
@@ -30,9 +31,9 @@ class ORMBuilderHelper
      * 
      * Replace Stub file an make model
      * 
-     * @param type $file
-     * @param type $list
-     * @param type $replace
+     * @param  string  $file
+     * @param  string  $list
+     * @param  string  $replace
      */
     public function replace($file, $list, $replace)
     {
@@ -45,8 +46,8 @@ class ORMBuilderHelper
      * 
      * crate dir model if no exists
      * 
-     * @param type $path
-     * @return type
+     * @param  string  $path
+     * @return  bool
      */
     public function makeModelDir($path)
     {
@@ -66,7 +67,23 @@ class ORMBuilderHelper
     public function scanRelation($allTable, $singular = false)
     {
         $relation  = null;
-        
+
+        $platform = DB::getDoctrineConnection()->getDatabasePlatform();
+        $platform->registerDoctrineTypeMapping('enum', 'string');
+        $platform->registerDoctrineTypeMapping('set', 'string');
+
+        $tablesScanForRelation = DB::connection()->getDoctrineSchemaManager()->listTableNames();
+        foreach($tablesScanForRelation as $tableScan) {
+            $allTableScan[$tableScan] = [];
+            $columnsScan = DB::connection()->getDoctrineSchemaManager()->listTableColumns($tableScan);
+
+            foreach($columnsScan as $key=>$columnScan) {
+                $allTableScan[$tableScan][$columnScan->getName()] = $columnScan->getType();
+            }
+        }
+
+
+
         foreach($allTable as $table_config=>$col) {
             
             if(!$singular) {
@@ -94,10 +111,11 @@ class ORMBuilderHelper
                     $model_name_scan = ucfirst($table_scan);
                 }
                 
-                echo $table_id;
+                
                 
                 if(array_key_exists ($table_id, $columns)) {
-                    if($columns[$table_id] == 'Integer') {
+                   
+                    if($columns[$table_id] == 'Integer' || $columns[$table_id] == 'BigInt' || $columns[$table_id] == 'TinyInt' || $columns[$table_id] == 'SmallInt' || $columns[$table_id] == 'MediumInt') {
                         $relation[$table_config][] = array('hasMany', $function_call, $model_name_scan, $table_id);
                         $relation[$table_scan][] = array('belongsTo', $table_call , $model_name, $table_id, 'id');
                     }

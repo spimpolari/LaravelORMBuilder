@@ -12,8 +12,8 @@ class ORMBuilderDBCommand extends Command
 {
 
     protected $signature = 'orm:db '
-        . '{path=app/Model : Path of Model File.}'
-        . '{namespace=App\Model : Namespace of Model.}'
+        . '{path=app/Models : Path of Model File.}'
+        . '{namespace=App\Models : Namespace of Model.}'
         . '{--F|force : Force Overwrite model instead of confirm!}'
         . '{--O|only= : List of reverse only Table table1,table2,table3 if set, exclude will be ignored.}'
         . '{--E|exclude= : List of Excluded Table table1,table2,table3}'
@@ -41,7 +41,7 @@ class ORMBuilderDBCommand extends Command
 
     /**
      * Packager helper class.
-     * @var object
+     * @var ORMBuilderHelper
      */
     protected $helper;
 
@@ -174,7 +174,8 @@ class ORMBuilderDBCommand extends Command
                 }
             }
         }
-        
+
+
         
         if(!$this->option ('disable-relation')) {
             $reverse_relation = $this->helper->scanRelation($reverse_column, $this->option ('disable-plural-table'));
@@ -253,6 +254,8 @@ class ORMBuilderDBCommand extends Command
                     $model->setRelation($reverse_relation[$key], $this->argument('namespace'));
                 }
             }
+
+
             
             if(file_exists ($model->fullPath) && !$this->option ('force')) {
                 if($this->confirm('Model file '.ucfirst($key).' Exists, Overwrite?')) {
