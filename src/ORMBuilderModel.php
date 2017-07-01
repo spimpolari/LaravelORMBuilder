@@ -195,7 +195,7 @@ class ORMBuilderModel
         $relation = '';
         
         foreach($table_relation as $option_key) {
-            $relation .= "\t".'public function '.lcfirst($option_key[1]).'() { $this->'.$option_key[0].'(\''.$namespace.'\\'.ucfirst($option_key[2]).'\', \''.$option_key[3].'\'); }'."\n\n";
+            $relation .= "\t".'public function '.lcfirst($option_key[1]).'() { return $this->'.$option_key[0].'(\''.$namespace.'\\'.ucfirst($option_key[2]).'\', \''.$option_key[3].'\'); }'."\n\n";
         }
 
         
