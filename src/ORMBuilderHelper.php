@@ -97,7 +97,7 @@ class ORMBuilderHelper
                 $table_call = $table_config;
             }
             
-            foreach($allTable as $table_scan=>$columns) {
+            foreach($allTableScan as $table_scan=>$columns) {
                 
                 
                 $belongsTo = null;
@@ -117,14 +117,27 @@ class ORMBuilderHelper
                    
                     if($columns[$table_id] == 'Integer' || $columns[$table_id] == 'BigInt' || $columns[$table_id] == 'TinyInt' || $columns[$table_id] == 'SmallInt' || $columns[$table_id] == 'MediumInt') {
                         $relation[$table_config][] = array('hasMany', $function_call, $model_name_scan, $table_id);
-                        $relation[$table_scan][] = array('belongsTo', $table_call , $model_name, $table_id, 'id');
+                        //$relation[$table_scan][] = array('belongsTo', $table_call , $model_name, $table_id, 'id');
                     }
                 }
-
             }
-            
-            
         }
+
+        foreach($allTable as $table_config=>$col) {
+            foreach($col as $col_name=>$col_type) {
+                if (preg_match('/_id/', $col_name)) {
+                    $relation_split = preg_split('/_/',$col_name);
+                    if(!$singular) {
+                        $model_name = ucfirst(str_singular($relation_split[0]));
+                    } else {
+                        $model_name = ucfirst($relation_split[0]);
+                    }
+                    $relation[$table_config][] = array('belongsTo', $relation_split[0], $model_name, $col_name, 'id');
+                }
+            }
+
+        }
+
         
         return $relation;
     }

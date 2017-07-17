@@ -193,8 +193,10 @@ class ORMBuilderDBCommand extends Command
             } else {
                 $fullPath = base_path().'/'.$this->argument('path').'/'. ucfirst ($key).'.php';
             }
-            
-            
+
+            /**
+             * Setup and render model
+             */
             $model = new ORMBuilderModel($fullPath);
             
             if(!$this->option ('disable-plural-table')) {
@@ -248,7 +250,11 @@ class ORMBuilderDBCommand extends Command
             if(!$this->option ('disable-property')) {
                 $model->setPropertyComment($reverse_column[$key]);
             }
-            
+
+            if(!$this->option ('disable-property')) {
+                $model->setMethodComment($this->argument('namespace'), $ModelName);
+            }
+
             if(!$this->option('disable-relation')) {
                 if(isset($reverse_relation[$key])) {
                     $model->setRelation($reverse_relation[$key], $this->argument('namespace'));

@@ -5,8 +5,10 @@ stub_namespace
 use Illuminate\Database\Eloquent\Model;
 stub_use_softdelete
 
+ /**
 stub_comment_property
-
+stub_comment_method
+ */
 class stub_model_name extends Model
 {
     /**

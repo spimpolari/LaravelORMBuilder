@@ -17,7 +17,7 @@ class ORMBuilderModel
      * @var array list of stub element in stub file
      */
     public $list = [
-        'stub_namespace', 'stub_model_name', 'stub_comment_property', 'stub_property_table', 'stub_primary_key', 'stub_timestamp', 'stub_date_format', 'stub_created_at', 'stub_updated_at', 'stub_use_softdelete', 'stub_trait_softdelete',  'stub_deleted_at', 'stub_fillable', 'stub_guarded', 'stub_relation'
+        'stub_namespace', 'stub_model_name', 'stub_comment_property', 'stub_comment_method', 'stub_property_table', 'stub_primary_key', 'stub_timestamp', 'stub_date_format', 'stub_created_at', 'stub_updated_at', 'stub_use_softdelete', 'stub_trait_softdelete',  'stub_deleted_at', 'stub_fillable', 'stub_guarded', 'stub_relation'
     ];
     
     /**
@@ -28,6 +28,7 @@ class ORMBuilderModel
         'stub_namespace' => '',
         'stub_model_name'=>'',
         'stub_comment_property' => '',
+        'stub_comment_method' => '',
         'stub_property_table'=>'',
         'stub_primary_key'=>'//protected $primaryKey = \'id\';',
         'stub_timestamp'=>'//public $timestamps = false;',
@@ -168,23 +169,49 @@ class ORMBuilderModel
         $array = array_diff($column, $limit);
         $this->replace['stub_guarded'] =  '//protected $guarded = '.$this->generateStringArray($array).';';
     }
-    
+
     /**
-     * 
+     *
      * @param type $columns
      */
     public function setPropertyComment($columns)
     {
-        $property_coment = '';
-        
+        $property_comment = '';
+
         foreach($columns as $column=>$type) {
 
-            $property_coment .= ' * @property '.$type.' $'.$column.' commento'."\n";
+            $property_comment .= ' * @property '.$type.' $'.$column.' commento'."\n";
         }
-        
-        $this->replace['stub_comment_property'] .= '/**'."\n".$property_coment.'*/';
+
+        $this->replace['stub_comment_property'] .= $property_comment;
     }
-        
+
+    /**
+     *
+     * @param type $columns
+     */
+    public function setMethodComment($namespace, $modelName)
+    {
+        $method_comment = ' * @method \\'.$namespace.'\\'.ucfirst($modelName).'[] get()'."\n";
+        $method_comment .= ' * @method static \\'.$namespace.'\\'.ucfirst($modelName).'[] all()'."\n";
+        $method_comment .= ' * @method \\'.$namespace.'\\'.ucfirst($modelName).' find(integer|array $integer)'."\n";
+        $method_comment .= ' * @method \\'.$namespace.'\\'.ucfirst($modelName).' first(integer $integer)'."\n";
+        $method_comment .= ' * @method \\'.$namespace.'\\'.ucfirst($modelName).' where(string $column, string $value)'."\n";
+        $method_comment .= ' * @method \\'.$namespace.'\\'.ucfirst($modelName).' orderBy(string $column, string $order)'."\n";
+        $method_comment .= ' * @method \\'.$namespace.'\\'.ucfirst($modelName).' findOrFail(integer $integer)'."\n";
+        $method_comment .= ' * @method static \\'.$namespace.'\\'.ucfirst($modelName).' firstOrFail()'."\n";
+        $method_comment .= ' * @method integer count()'."\n";
+//        $method_comment .= ' * @method save()'."\n";
+//        $method_comment .= ' * @method update()'."\n";
+//        $method_comment .= ' * @method delete()'."\n";
+//        $method_comment .= ' * @method destroy(integer $integer|array $integer)'."\n";
+        $method_comment .= ' * @method static \\'.$namespace.'\\'.ucfirst($modelName).' firstOrCreate(array $column_update)'."\n";
+        $method_comment .= ' * @method static \\'.$namespace.'\\'.ucfirst($modelName).' firstOrNew(array $column_update)'."\n";
+        $method_comment .= ' * @method static \\'.$namespace.'\\'.ucfirst($modelName).' updateOrCreate(array $column_update)'."\n";
+        $method_comment .= ' * @method static \\'.$namespace.'\\'.ucfirst($modelName).' create(array $column_update)';
+        $this->replace['stub_comment_property'] .= $method_comment;
+    }
+
     /**
      * 
      * @param type $table_relation
