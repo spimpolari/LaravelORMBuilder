@@ -29,7 +29,8 @@ class ORMBuilderDBCommand extends Command
         . '{--disable-table : Disable write table property.}'
         . '{--R|disable-relation : Disable relation name scan based on field name_id.}'
         . '{--P|disable-plural-table : Disable auto convert plural name table to single name model, use on non english table.}'
-        . '{--S|enable-softdelete : Enable Soft Delete.}';
+        . '{--S|enable-softdelete : Enable Soft Delete.}'
+        . '{--I|ide-helper : Integrate in Barryvdh Ide Helper.}';
     
 
     /**
@@ -252,7 +253,11 @@ class ORMBuilderDBCommand extends Command
             }
 
             if(!$this->option ('disable-property')) {
-                $model->setMethodComment($this->argument('namespace'), $ModelName);
+                if(!$this->option ('ide-helper')) {
+                    $model->setMethodComment($this->argument('namespace'), $ModelName);
+                } else {
+                    $model->setIntegrateIdeHelper();
+                }
             }
 
             if(!$this->option('disable-relation')) {

@@ -19,7 +19,6 @@ class ORMBuilderServiceProvider extends ServiceProvider
      * @var bool
      */
     protected $commands = [
-        'spimpolari\LaravelORMBuilder\ORMBuilderTableCommand',
         'spimpolari\LaravelORMBuilder\ORMBuilderDBCommand',
     ];
 

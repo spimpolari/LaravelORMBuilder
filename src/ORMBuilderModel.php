@@ -17,7 +17,7 @@ class ORMBuilderModel
      * @var array list of stub element in stub file
      */
     public $list = [
-        'stub_namespace', 'stub_model_name', 'stub_comment_property', 'stub_comment_method', 'stub_property_table', 'stub_primary_key', 'stub_timestamp', 'stub_date_format', 'stub_created_at', 'stub_updated_at', 'stub_use_softdelete', 'stub_trait_softdelete',  'stub_deleted_at', 'stub_fillable', 'stub_guarded', 'stub_relation'
+        'stub_namespace', 'stub_model_name', 'stub_extends_class', 'stub_comment_property', 'stub_comment_method', 'stub_property_table', 'stub_primary_key', 'stub_timestamp', 'stub_date_format', 'stub_created_at', 'stub_updated_at', 'stub_use_softdelete', 'stub_trait_softdelete',  'stub_deleted_at', 'stub_fillable', 'stub_guarded', 'stub_relation'
     ];
     
     /**
@@ -27,6 +27,7 @@ class ORMBuilderModel
     public $replace = [
         'stub_namespace' => '',
         'stub_model_name'=>'',
+        'stub_extends_class' => 'Model',
         'stub_comment_property' => '',
         'stub_comment_method' => '',
         'stub_property_table'=>'',
@@ -194,22 +195,27 @@ class ORMBuilderModel
     {
         $method_comment = ' * @method \\'.$namespace.'\\'.ucfirst($modelName).'[] get()'."\n";
         $method_comment .= ' * @method static \\'.$namespace.'\\'.ucfirst($modelName).'[] all()'."\n";
-        $method_comment .= ' * @method \\'.$namespace.'\\'.ucfirst($modelName).' find(integer|array $integer)'."\n";
-        $method_comment .= ' * @method \\'.$namespace.'\\'.ucfirst($modelName).' first(integer $integer)'."\n";
-        $method_comment .= ' * @method \\'.$namespace.'\\'.ucfirst($modelName).' where(string $column, string $value)'."\n";
-        $method_comment .= ' * @method \\'.$namespace.'\\'.ucfirst($modelName).' orderBy(string $column, string $order)'."\n";
-        $method_comment .= ' * @method \\'.$namespace.'\\'.ucfirst($modelName).' findOrFail(integer $integer)'."\n";
+        $method_comment .= ' * @method static \\'.$namespace.'\\'.ucfirst($modelName).' find(integer|array $integer)'."\n";
+        $method_comment .= ' * @method static \\'.$namespace.'\\'.ucfirst($modelName).' first(integer $integer)'."\n";
+        $method_comment .= ' * @method static \\'.$namespace.'\\'.ucfirst($modelName).' where(string $column, string $value)'."\n";
+        $method_comment .= ' * @method static \\'.$namespace.'\\'.ucfirst($modelName).' orderBy(string $column, string $order)'."\n";
+        $method_comment .= ' * @method static \\'.$namespace.'\\'.ucfirst($modelName).' findOrFail(integer $integer)'."\n";
         $method_comment .= ' * @method static \\'.$namespace.'\\'.ucfirst($modelName).' firstOrFail()'."\n";
         $method_comment .= ' * @method integer count()'."\n";
-//        $method_comment .= ' * @method save()'."\n";
-//        $method_comment .= ' * @method update()'."\n";
-//        $method_comment .= ' * @method delete()'."\n";
-//        $method_comment .= ' * @method destroy(integer $integer|array $integer)'."\n";
+        $method_comment .= ' * @method save()'."\n";
+        $method_comment .= ' * @method update()'."\n";
+        $method_comment .= ' * @method delete()'."\n";
+        $method_comment .= ' * @method destroy(integer $integer|array $integer)'."\n";
         $method_comment .= ' * @method static \\'.$namespace.'\\'.ucfirst($modelName).' firstOrCreate(array $column_update)'."\n";
         $method_comment .= ' * @method static \\'.$namespace.'\\'.ucfirst($modelName).' firstOrNew(array $column_update)'."\n";
         $method_comment .= ' * @method static \\'.$namespace.'\\'.ucfirst($modelName).' updateOrCreate(array $column_update)'."\n";
         $method_comment .= ' * @method static \\'.$namespace.'\\'.ucfirst($modelName).' create(array $column_update)';
         $this->replace['stub_comment_property'] .= $method_comment;
+    }
+
+    public function setIntegrateIdeHelper()
+    {
+        $this->replace['stub_extends_class'] = '\Eloquent';
     }
 
     /**
